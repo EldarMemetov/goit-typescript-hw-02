@@ -1,7 +1,10 @@
+import React from "react";
 import ImageCard from "../ImageCard/ImageCard";
 import styles from "./ImageGallery.module.css";
-const ImageGallery = ({ images, openModal }) => {
-  const handleClick = (imageUrl) => {
+import { ImageGalleryProps } from "../App/App.types";
+
+const ImageGallery: React.FC<ImageGalleryProps> = ({ images, openModal }) => {
+  const handleClick = (imageUrl: string) => {
     openModal(imageUrl);
   };
 

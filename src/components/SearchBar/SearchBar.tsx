@@ -1,10 +1,15 @@
+import React from "react";
 import { toast } from "react-hot-toast";
 import search from "./SearchBar.module.css";
-export default function SearchBar({ onSearch }) {
-  const handleSubmit = (event) => {
+import { SearchBarProps } from "../App/App.types";
+
+const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const form = event.target;
-    const query = form.elements.query.value.trim();
+    const form = event.target as HTMLFormElement;
+    const query = (
+      form.elements.namedItem("query") as HTMLInputElement
+    ).value.trim();
     if (query === "") {
       toast("attention empty line", {
         icon: "🔍",
@@ -37,4 +42,6 @@ export default function SearchBar({ onSearch }) {
       </form>
     </header>
   );
-}
+};
+
+export default SearchBar;

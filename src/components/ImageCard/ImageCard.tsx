@@ -1,5 +1,8 @@
+import React from "react";
 import image from "./imageCard.module.css";
-const ImageCard = ({ imageUrl, altDescription }) => {
+import { ImageCardProps } from "../App/App.types";
+
+const ImageCard: React.FC<ImageCardProps> = ({ imageUrl, altDescription }) => {
   return (
     <div>
       <img src={imageUrl} alt={altDescription} className={image.img} />

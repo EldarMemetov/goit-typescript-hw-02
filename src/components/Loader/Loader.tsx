@@ -1,6 +1,6 @@
 import { Hourglass } from "react-loader-spinner";
-
-const Loader = () => {
+import React from "react";
+const Loader: React.FC = () => {
   return (
     <Hourglass
       visible={true}

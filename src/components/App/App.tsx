@@ -1,25 +1,27 @@
+import React from "react";
 import "./App.css";
 import { useState, useEffect } from "react";
-import { fetchImg } from "./components/ImgItemHttp/ImgItemHttp";
-import ImageGallery from "./components/ImageGallery/ImageGallery";
-import Loader from "./components/Loader/Loader";
-import ErrorMessage from "./components/ErrorMessage/ErrorMessage";
-import SearchBar from "./components/SearchBar/SearchBar";
+import { fetchImg } from "../ImgItemHttp/ImgItemHttp";
+import ImageGallery from "../ImageGallery/ImageGallery";
+import Loader from "../Loader/Loader";
+import ErrorMessage from "../ErrorMessage/ErrorMessage";
+import SearchBar from "../SearchBar/SearchBar";
 import { Toaster } from "react-hot-toast";
-import LoadMoreBtn from "./components/LoadMoreBtn/LoadMoreBtn";
-import ImageModal from "./components/ImageModal/ImageModal";
+import LoadMoreBtn from "../LoadMoreBtn/LoadMoreBtn";
+import ImageModal from "../ImageModal/ImageModal";
+import { FetchImgResponse, Image } from "./App.types";
 
 function App() {
-  const [images, setImages] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(false);
-  const [query, setQuery] = useState("");
-  const [page, setPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(0);
-  const [modalIsOpen, setIsOpen] = useState(false);
-  const [selectedImageUrl, setSelectedImageUrl] = useState("");
+  const [images, setImages] = useState<Image[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<boolean>(false);
+  const [query, setQuery] = useState<string>("");
+  const [page, setPage] = useState<number>(1);
+  const [totalPages, setTotalPages] = useState<number>(0);
+  const [modalIsOpen, setIsOpen] = useState<boolean>(false);
+  const [selectedImageUrl, setSelectedImageUrl] = useState<string>("");
 
-  const handleSearchSubmit = async (searchQuery) => {
+  const handleSearchSubmit = async (searchQuery: string) => {
     setImages([]);
     setPage(1);
     setQuery(searchQuery);
@@ -39,7 +41,10 @@ function App() {
       try {
         setLoading(true);
         setError(false);
-        const data = await fetchImg(query, page);
+        const data: FetchImgResponse = await fetchImg({
+          query,
+          currentPage: page,
+        });
         setImages((prevImages) => [...prevImages, ...data.results]);
         setTotalPages(data.total_pages);
       } catch (error) {
@@ -53,7 +58,7 @@ function App() {
     getImages();
   }, [query, page]);
 
-  const openModal = (imageUrl) => {
+  const openModal = (imageUrl: string) => {
     setSelectedImageUrl(imageUrl);
     setIsOpen(true);
   };
@@ -64,7 +69,7 @@ function App() {
 
   return (
     <div>
-      <SearchBar onSearch={handleSearchSubmit} query={query} />
+      <SearchBar onSearch={handleSearchSubmit} />
       <Toaster />
       {error && <ErrorMessage />}
       {loading && <Loader />}
