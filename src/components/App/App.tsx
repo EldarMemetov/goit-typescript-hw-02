@@ -9,7 +9,7 @@ import SearchBar from "../SearchBar/SearchBar";
 import { Toaster } from "react-hot-toast";
 import LoadMoreBtn from "../LoadMoreBtn/LoadMoreBtn";
 import ImageModal from "../ImageModal/ImageModal";
-import { FetchImgResponse, Image } from "./App.types";
+import { Image } from "./App.types";
 
 function App() {
   const [images, setImages] = useState<Image[]>([]);
@@ -41,7 +41,7 @@ function App() {
       try {
         setLoading(true);
         setError(false);
-        const data: FetchImgResponse = await fetchImg({
+        const data = await fetchImg({
           query,
           currentPage: page,
         });

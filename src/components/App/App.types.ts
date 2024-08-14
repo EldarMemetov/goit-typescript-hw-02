@@ -37,13 +37,6 @@ export interface FetchImgParams {
 }
 
 export interface FetchImgResponse {
-  results: Array<{
-    id: string;
-    urls: {
-      small: string;
-      regular: string;
-    };
-    alt_description: string;
-  }>;
+  results: Image[];
   total_pages: number;
 }
